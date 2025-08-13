@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "socket.io-client": "^4.7.5"
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^7.3.1",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-scripts": "^5.0.1",
+    "socket.io-client": "^4.8.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -13,7 +17,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:3000",
+  "proxy": "http://localhost:5000",
   "eslintConfig": {
     "extends": [
       "react-app",

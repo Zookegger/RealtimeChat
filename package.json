@@ -4,13 +4,13 @@
   "description": "RealtimeChat demonstrates the basics of real-time communication using WebSocket technology via the Socket.IO library. Multiple clients can connect, send messages, and see messages broadcast instantly to all connected users.",
   "main": "server/app.js",
   "scripts": {
-  "test": "echo \"Error: no test specified\" && exit 1",
-  "start": "concurrently \"npm run server\" \"npm run client\"",
-  "client": "PORT=3001 REACT_APP_API_URL=http://localhost:3000 npm start --prefix client",
-  "server": "nodemon server/src/app.js",
-    "install_client": "cd client && npm install",    
-    "install_server": "cd server && npm install",
-    "setup": "npm run install_server && npm run install_client"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "client": "PORT=3000 REACT_APP_API_URL=http://localhost:3000 npm start --prefix client",
+    "server": "nodemon server/src/app.js",
+      "install_client": "cd client && npm install",    
+      "install_server": "cd server && npm install",
+      "setup": "npm run install_server && npm run install_client"
   },
   "dependencies": {
     "concurrently": "^9.1.0"
