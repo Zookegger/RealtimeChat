@@ -43,7 +43,6 @@ services:
         ports:
             - "5000:5000"
         environment:
-            # ====== Database ======
             - MONGO_URI=${MONGO_URI}?authSource=admin
         depends_on:
             mongo:
