@@ -24,7 +24,6 @@ export const createWebsockeServer = (httpServer) => {
         connections.set(socket.id, socket);
         logger.info(`[CONNECT] Total connections: ${connections.size}`);
 
-        total_connections++;
         logger.info(`WebSocket connected: ${socket.id}`);
     });
     
