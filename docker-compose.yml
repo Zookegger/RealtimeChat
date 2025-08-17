@@ -35,7 +35,7 @@ services:
     realtimechat-server:
         build:
             context: ./server
-            dockerfile: Dockerfile
+            dockerfile: dockerfile
         container_name: realtimechat-server
         restart: unless-stopped
         env_file:
@@ -48,6 +48,26 @@ services:
         depends_on:
             mongo:
                 condition: service_healthy
+        networks:
+            - realtimechat_network
+        healthcheck:
+            test: curl -f http://localhost:5000
+            interval: 10s
+            timeout: 10s
+            retries: 5
+
+    realtimechat-client:
+        build:
+            context: ./client
+            dockerfile: dockerfile
+        container_name: realtimechat-client
+        restart: unless-stopped
+        env_file:
+            - .env.docker
+        ports:
+            - "3000:3000"
+        depends_on:
+            - realtimechat-server
         networks:
             - realtimechat_network
 
