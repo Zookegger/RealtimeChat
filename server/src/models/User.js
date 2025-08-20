@@ -5,12 +5,14 @@ import bcrypt from "bcryptjs";
  * @typedef {('male'|'female'|'other')} Gender - Possible gender values
  */
 const genders = ["male", "female", "other"];
+const user_roles = ["admin", "user"];
 
 /**
  * Mongoose schema for User
  * @typedef {Object} UserSchema
  * @property {string} userName - Unique username
  * @property {string} email - Unique email address
+ * @property {Role} userRole - Unique email address
  * @property {boolean} isEmailVerified - Email verification status
  * @property {string} password - Hashed password (automatically excluded from queries)
  * @property {string} fullname - User's full name
@@ -28,7 +30,7 @@ const userSchema = new mongoose.Schema(
 			type: String,
 			required: [true, "Username is required"],
 			trim: true,
-			unique: true,
+			// unique: true,
 		},
 
 		/**
@@ -37,7 +39,7 @@ const userSchema = new mongoose.Schema(
 		email: {
 			type: String,
 			required: [true, "Email is required"],
-			unique: true,
+			// unique: true,
 			trim: true,
 			lowercase: true,
 			validate: {
@@ -45,7 +47,15 @@ const userSchema = new mongoose.Schema(
 				message: "Invalid email format",
 			},
 		},
-
+		userRole: {
+			type: String,
+			enum: {
+				values: user_roles,
+				message: 'Invalid role',
+			},
+			required: true,
+			default: user_roles[1] // User
+		},
 		/**
 		 * Email verification status
 		 */
@@ -111,7 +121,7 @@ const userSchema = new mongoose.Schema(
 			/**
 			 * Compares plain text password with hashed password
 			 * @param {string} password - Plain text password to compare
-			 * @returns {Promise<boolean>} True if passwords match
+			 * @returns {boolean} True if passwords match
 			 */
 			async checkPassword(password) {
 				return await bcrypt.compare(password, this.password);

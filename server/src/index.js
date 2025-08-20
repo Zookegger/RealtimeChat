@@ -3,14 +3,11 @@ import app from './app.js';
 import { connectDB } from './config/db.js';
 import logger from './utils/logger.js';
 import dotenv from 'dotenv';
-import { createWebsockeServer } from './config/socket.js';
-
-/**
- * Main entry point for the RealtimeChat server.
- * Sets up database, HTTP server, and WebSocket server.
- */
+import { createWebsocketServer } from './sockets/socket.js';
 
 dotenv.config();
+
+logger.debug(`JWT_SECRET: ${process.env.JWT_SECRET}`);
 
 const PORT = process.env.SERVER_PORT || 5000;
 
@@ -82,7 +79,7 @@ const initializeServer = async () => {
     try {
         await establishDatabaseConnection();
         const server = createHttpServer();
-        createWebsockeServer(server);
+        createWebsocketServer(server);
         startServer(server);
     } catch (err) {
         handleStartupError(err);

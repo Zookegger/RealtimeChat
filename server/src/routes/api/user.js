@@ -1,27 +1,29 @@
 import { Router } from "express";
-import userController from "../../controllers/userController";
-import { body, validationResult } from "express-validator";
+import { login } from "../../controllers/userController.js";
+import { body } from "express-validator";
+import { handleValidationErrors } from "../../middlewares/requestValidation.js";
+
+const loginValidation = [
+	body("username").notEmpty().withMessage("Username is required"),
+	body("password").notEmpty().withMessage("Password is required"),
+];
+const registerValidation = [
+	body("username").notEmpty().withMessage("Username is required"),
+	body("password")
+		.isLength({ min: 8 })
+		.withMessage("Password must be at least 8 characters")
+		.matches(/\d/)
+		.withMessage("Password must contain a number")
+		.matches(/[a-zA-Z]/)
+		.withMessage("Password must contain a letter"),
+];
 
 const router = Router();
 
-router.post(
-	"login/",
-	[
-		body("username").notEmpty().withMessage("Username is required"),
-		body("password")
-			.isLength({ min: 8 }).withMessage("Password must be at least 8 characters")
-			.matches(/\d/).withMessage("Password must contain a number")
-			.matches(/[a-zA-Z]/).withMessage("Password must contain a letter"),
-	],
-	async (req, res, next) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
+router.post("/login", loginValidation, handleValidationErrors, login);
 
-		const { username, password } = req.body;
-		await userController.login(username, password, res, next);
-	}
-);
+router.get("/health", (req, res) => {
+	res.json("It's working!");
+});
 
 export default router;

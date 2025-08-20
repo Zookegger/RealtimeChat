@@ -33,9 +33,19 @@ mongoose.connection.on("connected", () => {
         host: mongoose.connection.host,
         port: mongoose.connection.port,
         db: mongoose.connection.name,
-        readyState: mongoose.connection.readyState
+        readyState: mongoose.connection.readyState // 0 = disconnected; 1 = connected; 2 = connecting
     };
-    logger.info('MongoDB connected', connInfo);
+	const stateMap = {
+		0: "disconnected",
+		1: "connected",
+		2: "connecting",
+		3: "disconnecting",
+	}; 
+
+    logger.info('MongoDB connected');
+    logger.info(`Connection: ${connInfo.host}:${connInfo.port}`);
+    logger.info(`Database: ${connInfo.db}`);
+    logger.info(`State: ${stateMap[connInfo.readyState]}`);
 });
 
 // Connection error
