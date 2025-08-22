@@ -1,15 +1,30 @@
-import logo from "./logo.svg";
 import "./App.css";
-import Layout from "./components/Layout";
+import { UserLayout } from "./components/User/UserLayout";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { HomePage } from "./pages/Shared/HomePage";
+import { NotFound } from "./pages/Shared/NotFound";
+import { useState } from "react";
+import { GuestLayout } from "./components/Guest/GuestLayout";
+import { useAuth } from "./hooks/useAuth";
+import { ProtectedRoute } from "./components/Shared/ProtectedRoute";
 
-function App() {
+const App = () => {
 	return (
 		<div className="App">
-			<Layout>
-				<h1>Welcome to RealtimeChat!</h1>
-			</Layout>
+			<Routes>
+				{/* Shared routes between the actors */}
+				<Route path="/" element={<HomePage />} />
+				<Route path="*" element={<NotFound />} />
+				
+				{/* <Route element={<GuestLayout />}>
+
+				</Route>
+				<Route element={<UserLayout />}>
+				
+				</Route> */}
+			</Routes>
 		</div>
 	);
-}
+};
 
 export default App;
