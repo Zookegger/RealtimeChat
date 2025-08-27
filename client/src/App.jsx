@@ -7,6 +7,9 @@ import { useState } from "react";
 import { GuestLayout } from "./components/Guest/GuestLayout";
 import { useAuth } from "./hooks/useAuth";
 import { ProtectedRoute } from "./components/Shared/ProtectedRoute";
+import { PrivacyPolicy } from "./pages/Shared/PrivacyPolicy";
+import { About } from "./pages/Shared/About";
+import { Login } from "./pages/Guest/Login";
 
 const App = () => {
 	return (
@@ -16,12 +19,17 @@ const App = () => {
 				<Route path="/" element={<HomePage />} />
 				<Route path="*" element={<NotFound />} />
 				
-				{/* <Route element={<GuestLayout />}>
-
+				{/* Guest's Routes */}
+				<Route element={<GuestLayout />}>
+					<Route path="/privacy" element={<PrivacyPolicy />} />
+					<Route path="/about" element={<About />} />
+					<Route path="/login" element={<Login />} />
 				</Route>
+
+				{/* User's Routes */}
 				<Route element={<UserLayout />}>
-				
-				</Route> */}
+					<Route path="/setting" />
+				</Route>
 			</Routes>
 		</div>
 	);

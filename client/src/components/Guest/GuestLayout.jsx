@@ -2,6 +2,7 @@ import { GuestHeader as Header } from "./GuestHeader";
 import { GuestFooter as Footer } from "./GuestFooter";
 import "./GuestLayout.css";
 import { Outlet } from "react-router-dom";
+import { Container } from "@mui/material";
 
 export const GuestLayout = ({ children }) => {
 	return (
@@ -9,7 +10,7 @@ export const GuestLayout = ({ children }) => {
 			<Header />
 			<div className="layout-body">
 				<main className="main-content">
-                    {/* Render children if provided, otherwise render Outlet for nested routes */}
+					{/* Render children if provided, otherwise render Outlet for nested routes */}
 					{children || <Outlet />}
 				</main>
 			</div>
