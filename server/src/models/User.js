@@ -16,7 +16,7 @@ const user_roles = ["admin", "user"];
  * @property {boolean} isEmailVerified - Email verification status
  * @property {string} password - Hashed password (automatically excluded from queries)
  * @property {string} fullname - User's full name
- * @property {Date} dateOfBirth - User's date of birth
+ * @property {Date} birthday - User's date of birth
  * @property {Gender} gender - User's gender
  * @property {Date} createdAt - Auto-generated creation timestamp
  * @property {Date} updatedAt - Auto-generated update timestamp
@@ -87,7 +87,7 @@ const userSchema = new mongoose.Schema(
 		/**
 		 * Date of birth field
 		 */
-		dateOfBirth: {
+		birthday: {
 			type: Date,
 			required: [true, "Date of birth is required"],
 			validate: {

@@ -6,7 +6,7 @@ class UserAuthError extends Error {
 	constructor(message, error_status) {
 		super(message);
 		this.name = this.constructor.name;
-		this.status = error_status;
+		this.statusCode = error_status;
 
 		if (Error.captureStackTrace) {
 			Error.captureStackTrace(this, this.constructor);
@@ -16,11 +16,14 @@ class UserAuthError extends Error {
 
 export const login = async (req, res, next) => {
 	try {
-		const { username, password } = req.body;
+		const { login, password } = req.body;
 
-		const user = await User.findOne({ userName: username }).select(
-			"+password"
-		);
+		const user = await User.findOne({
+			$or: [
+				{ userName: login }, 
+				{ email: login }
+			],
+		}).select("+password");
 
 		if (!user)
 			throw new UserAuthError(
@@ -47,7 +50,7 @@ export const register = async (req, res, next) => {
 			$or: [
 				{ userName: register_user.userName },
 				{ email: register_user.email },
-			]
+			],
 		});
 
 		if (existing_user) {
@@ -56,7 +59,7 @@ export const register = async (req, res, next) => {
 
 		const new_user = await User.create({
 			userName: register_user.userName,
-			dateOfBirth: register_user.dateOfBirth,
+			birthday: register_user.birthday,
 			email: register_user.email,
 			fullname: register_user.fullname,
 			gender: register_user.gender,

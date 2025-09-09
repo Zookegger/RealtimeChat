@@ -62,7 +62,7 @@ export const validateRequest = (validations) => {
     };
 };
 
-const errorHandler = (err, req, res, next) => {
+export const errorHandler = (err, req, res, next) => {
     // 1. Handle missing error object
     if (!err || typeof err !== 'object') {
         err = new AppError('Unknown server error', 500);
@@ -126,5 +126,3 @@ const errorHandler = (err, req, res, next) => {
         console.error('Fatal: No response object available', response);
     }
 };
-
-export default errorHandler;

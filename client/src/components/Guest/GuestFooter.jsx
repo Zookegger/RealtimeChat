@@ -19,7 +19,16 @@ import {
 	ContactSupport,
 	Phone,
 	LocationOn,
+	LinkSharp,
 } from "@mui/icons-material";
+import { Link as NavLink } from "react-router-dom";
+
+const scrollToTop = () => {
+	window.scrollTo({
+		top: 0,
+		behavior: "smooth",
+	});
+};
 
 export const GuestFooter = () => {
 	return (
@@ -33,8 +42,97 @@ export const GuestFooter = () => {
 			}}
 		>
 			<Container maxWidth="lg">
-				<Grid container direction={"row"} spacing={4}>
-					<Grid item size={{ xs: 12, md: 4 }}></Grid>
+				<Grid
+					container
+					direction={"row"}
+					spacing={4}
+					sx={{
+						display: {
+							xs: "none",
+							sm: "none",
+							md: "flex",
+							xl: "flex",
+							xxl: "flex",
+						},
+					}}
+				>
+					{/* Navigation */}
+					<Grid item size={{ xs: 12, md: 4 }}>
+						<Box
+							sx={{
+								justifyContent: "left",
+								display: "flex",
+								alignItems: "center",
+								mb: 1,
+							}}
+						>
+							<Typography variant="h6">Quick Links</Typography>
+							<LinkSharp sx={{ ml: 1 }} />
+						</Box>
+
+						<List sx={{ padding: 0, maxWidth: 60 }}>
+							<ListItem
+								sx={{
+									padding: 0,
+									color: "white",
+								}}
+							>
+								<ListItemText
+									component={NavLink}
+									onClick={scrollToTop}
+									to={"/"}
+									sx={{
+										":visited": {
+											color: "White",
+										},
+										textDecoration: "none",
+									}}
+								>
+									Home
+								</ListItemText>
+							</ListItem>
+							<ListItem
+								sx={{
+									padding: 0,
+									color: "white",
+								}}
+							>
+								<ListItemText
+									component={NavLink}
+									onClick={scrollToTop}
+									to={"/privacy"}
+									sx={{
+										":visited": {
+											color: "White",
+										},
+										textDecoration: "none",
+									}}
+								>
+									Privacy
+								</ListItemText>
+							</ListItem>
+							<ListItem
+								sx={{
+									padding: 0,
+									color: "white",
+								}}
+							>
+								<ListItemText
+									component={NavLink}
+									onClick={scrollToTop}
+									to={"/about"}
+									sx={{
+										":visited": {
+											color: "White",
+										},
+										textDecoration: "none",
+									}}
+								>
+									About
+								</ListItemText>
+							</ListItem>
+						</List>
+					</Grid>
 
 					{/* About */}
 					<Grid item size={{ xs: 12, md: 4 }}>
@@ -52,21 +150,21 @@ export const GuestFooter = () => {
 					<Grid item size={{ xs: 12, md: 4 }}>
 						<Box
 							sx={{
+								justifyContent: "right",
 								display: "flex",
 								alignItems: "center",
 								mb: 1,
 							}}
 						>
-							<ContactSupport sx={{ mr: 1 }} />
 							<Typography variant="h6">Support</Typography>
+							<ContactSupport sx={{ ml: 1 }} />
 						</Box>
-						<List dense disablePadding>
+						<List
+							dense
+							disablePadding
+							sx={{ md: { textAlign: "right" } }}
+						>
 							<ListItem disableGutters>
-								<ListItemIcon
-									sx={{ minWidth: 30, color: "inherit" }}
-								>
-									<Email fontSize="small" />
-								</ListItemIcon>
 								<ListItemText
 									primary={
 										<Link
@@ -77,24 +175,215 @@ export const GuestFooter = () => {
 											support@realtime-chat.com
 										</Link>
 									}
+									sx={{ textAlign: "right" }}
 								/>
+								<ListItemIcon
+									sx={{
+										ml: 1,
+										minWidth: 0,
+										color: "inherit",
+									}}
+								>
+									<Email fontSize="small" />
+								</ListItemIcon>
 							</ListItem>
 							<ListItem disableGutters>
+								<ListItemText
+									primary="+84 123456789"
+									sx={{ textAlign: "right" }}
+								/>
 								<ListItemIcon
-									sx={{ minWidth: 30, color: "inherit" }}
+									sx={{
+										ml: 1,
+										minWidth: 0,
+										color: "inherit",
+									}}
 								>
 									<Phone fontSize="small" />
 								</ListItemIcon>
-								<ListItemText primary="+84 123456789" />
 							</ListItem>
+							{/* 
 							<ListItem disableGutters>
+								<ListItemText primary="Based in Internet" 
+									sx={{ textAlign: "right" }}
+								/>
 								<ListItemIcon
-									sx={{ minWidth: 30, color: "inherit" }}
+									sx={{ ml: 1, minWidth: 0, color: "inherit" }}
 								>
 									<LocationOn fontSize="small" />
 								</ListItemIcon>
-								<ListItemText primary="Based in Internet" />
+							</ListItem> 
+							*/}
+						</List>
+					</Grid>
+				</Grid>
+
+				<Grid
+					container
+					direction={"row"}
+					spacing={4}
+					sx={{
+						display: { md: "none", xl: "none", xxl: "none" },
+					}}
+				>
+					{/* About */}
+					<Grid item size={{ xs: 12, md: 4 }}>
+						<Typography variant="h6" gutterBottom>
+							&copy; 2025 RealtimeChat
+						</Typography>
+						<Typography variant="body2">
+							Connecting people through seamless and secure
+							communication. A personal project built with passion
+							for real-time technology.
+						</Typography>
+					</Grid>
+
+					{/* Navigation */}
+					<Grid item size={{ xs: 6, md: 4 }}>
+						<Box
+							sx={{
+								justifyContent: "left",
+								display: "flex",
+								alignItems: "center",
+								mb: 1,
+							}}
+						>
+							<Typography variant="h6">Quick Links</Typography>
+							<LinkSharp sx={{ ml: 1 }} />
+						</Box>
+
+						<List sx={{ padding: 0 }}>
+							<ListItem
+								sx={{
+									padding: 0,
+									color: "white",
+								}}
+							>
+								<ListItemText
+									component={NavLink}
+									onClick={scrollToTop}
+									to={"/"}
+									sx={{
+										":visited": {
+											color: "White",
+										},
+										textDecoration: "none",
+									}}
+								>
+									Home
+								</ListItemText>
 							</ListItem>
+							<ListItem
+								sx={{
+									padding: 0,
+									color: "white",
+								}}
+							>
+								<ListItemText
+									component={NavLink}
+									onClick={scrollToTop}
+									to={"/privacy"}
+									sx={{
+										":visited": {
+											color: "White",
+										},
+										textDecoration: "none",
+									}}
+								>
+									Privacy
+								</ListItemText>
+							</ListItem>
+							<ListItem
+								sx={{
+									padding: 0,
+									color: "white",
+								}}
+							>
+								<ListItemText
+									component={NavLink}
+									onClick={scrollToTop}
+									to={"/about"}
+									sx={{
+										":visited": {
+											color: "White",
+										},
+										textDecoration: "none",
+									}}
+								>
+									About
+								</ListItemText>
+							</ListItem>
+						</List>
+					</Grid>
+
+					{/* Contact */}
+					<Grid item size={{ xs: 6, md: 4 }}>
+						<Box
+							sx={{
+								justifyContent: "right",
+								display: "flex",
+								alignItems: "center",
+								mb: 1,
+							}}
+						>
+							<Typography variant="h6">Support</Typography>
+							<ContactSupport sx={{ ml: 1 }} />
+						</Box>
+						<List
+							dense
+							disablePadding
+							sx={{ md: { textAlign: "right" } }}
+						>
+							<ListItem disableGutters>
+								<ListItemText
+									primary={
+										<Link
+											href="mailto:support@realtime-chat.com"
+											color="inherit"
+											underline="hover"
+										>
+											support@realtime-chat.com
+										</Link>
+									}
+									sx={{ textAlign: "right" }}
+								/>
+								<ListItemIcon
+									sx={{
+										ml: 1,
+										minWidth: 0,
+										color: "inherit",
+									}}
+								>
+									<Email fontSize="small" />
+								</ListItemIcon>
+							</ListItem>
+							<ListItem disableGutters>
+								<ListItemText
+									primary="+84 123456789"
+									sx={{ textAlign: "right" }}
+								/>
+								<ListItemIcon
+									sx={{
+										ml: 1,
+										minWidth: 0,
+										color: "inherit",
+									}}
+								>
+									<Phone fontSize="small" />
+								</ListItemIcon>
+							</ListItem>
+							{/* 
+							<ListItem disableGutters>
+								<ListItemText primary="Based in Internet" 
+									sx={{ textAlign: "right" }}
+								/>
+								<ListItemIcon
+									sx={{ ml: 1, minWidth: 0, color: "inherit" }}
+								>
+									<LocationOn fontSize="small" />
+								</ListItemIcon>
+							</ListItem> 
+							*/}
 						</List>
 					</Grid>
 				</Grid>

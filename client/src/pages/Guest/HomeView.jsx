@@ -8,6 +8,7 @@ import {
 	Card,
 	CardContent,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const scrollToSection = (elementId) => {
 	const element = document.getElementById(elementId);
@@ -129,6 +130,8 @@ export const GuestHomeView = () => {
 									backgroundColor: "primary.dark",
 								},
 							}}
+							component={Link}
+							to={"/login"}
 						>
 							Start Chatting
 						</Button>

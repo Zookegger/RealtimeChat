@@ -1,8 +1,11 @@
 import { LoginOutlined, PersonAdd } from "@mui/icons-material";
 import {
+	Alert,
+	Backdrop,
 	Box,
 	Button,
 	Checkbox,
+	CircularProgress,
 	Container,
 	FormControl,
 	FormControlLabel,
@@ -13,18 +16,21 @@ import {
 	Typography,
 } from "@mui/material";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export const Login = () => {
 	const [remember_me, setRememberMe] = useState(false);
-	const [username, setUsername] = useState("");
+	const [is_loading, setIsLoading] = useState(false);
+	const [usernameOrEmail, setUsernameOrEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [errors, setErrors] = useState({ username: "", password: "" });
+	const [form_error, setFormError] = useState(null);
 
 	const validateForm = () => {
 		let isValid = true;
 		const newErrors = { username: "", password: "" };
 
-		if (!username) {
+		if (!usernameOrEmail) {
 			isValid = false;
 			newErrors.username = "Username or email is invalid";
 		}
@@ -36,6 +42,38 @@ export const Login = () => {
 
 		setErrors(newErrors);
 		return isValid;
+	};
+
+	const loginProcess = async () => {
+		try {
+			const API_BASE_URL = process.env.REACT_APP_API_URL;
+			const LOGIN_ENDPOINT = "/users/login";
+
+			const response = await fetch(`${API_BASE_URL}${LOGIN_ENDPOINT}`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					login: usernameOrEmail,
+					password: password,
+				}),
+			});
+
+			const data = await response.json();
+			if (response.ok) {
+				console.log(`Login successful:`, data);
+			} else {
+				console.error(`Login failed:`, data);
+				setFormError(
+					data.errors?.[0]?.msg ||
+						data.error.message ||
+						"Login failed"
+				);
+			}
+		} catch (error) {
+			console.error(`Network error: ${error.message}`);
+		}
 	};
 
 	return (
@@ -54,24 +92,33 @@ export const Login = () => {
 					component="form"
 					onSubmit={(e) => {
 						e.preventDefault();
+						setFormError(null);
 
+						setIsLoading(true);
 						validateForm();
-						alert("Yeah, it's working");
-						// Login API logic here
+						loginProcess();
+						setIsLoading(false);
 					}}
 				>
+					{form_error !== null && (
+						<Alert severity="error" sx={{ mb: 2 }}>
+							{form_error ??
+								"An error occured while logging you in"}
+						</Alert>
+					)}
+					{/* Username & Password */}
 					<Box display={"flex"} flexDirection={"column"} gap={2}>
 						<FormControl variant="standard">
 							<InputLabel size="medium" sx={{ fontSize: 18 }}>
 								Username or Email
 							</InputLabel>
 							<Input
-								id="username"
-								name="username"
+								id="usernameOrEmail"
+								name="usernameOrEmail"
 								autoComplete="username"
-								value={username}
+								value={usernameOrEmail}
 								onChange={(e) => {
-									setUsername(e.target.value);
+									setUsernameOrEmail(e.target.value);
 								}}
 								required
 								placeholder="Enter your username or email"
@@ -98,6 +145,9 @@ export const Login = () => {
 						</FormControl>
 					</Box>
 
+					{/* Forgot your password */}
+
+					{/* Remember your password */}
 					<FormGroup sx={{ my: 2 }}>
 						<FormControlLabel
 							control={
@@ -113,6 +163,8 @@ export const Login = () => {
 							sx={{ userSelect: "none" }}
 						/>
 					</FormGroup>
+
+					{/* Button group */}
 					<Box
 						sx={{
 							gap: { sm: 1 },
@@ -137,12 +189,24 @@ export const Login = () => {
 							fullWidth
 							variant="outlined"
 							startIcon={<PersonAdd />}
+							component={Link}
+							to="/register"
 						>
 							Register
 						</Button>
 					</Box>
 				</Box>
 			</Paper>
+
+			<Backdrop
+				sx={(theme) => ({
+					color: "#fff",
+					zIndex: theme.zIndex.drawer + 1,
+				})}
+				open={is_loading}
+			>
+				<CircularProgress color="inherit" />
+			</Backdrop>
 		</Container>
 	);
 };
