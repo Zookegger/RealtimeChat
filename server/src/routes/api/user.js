@@ -18,19 +18,6 @@ const registerValidation = [
 		.withMessage("Password must contain a letter")
 		.isStrongPassword()
 		.withMessage("Password is not strong enough"),
-	body("confirm-password")
-		.isLength({ min: 8 })
-		.withMessage("Confirm password must be at least 8 characters")
-		.matches(/\d/)
-		.withMessage("Confirm password must contain a number")
-		.matches(/[a-zA-Z]/)
-		.withMessage("Confirm password must contain a letter")
-		.custom((value, { req }) => {
-			if (value !== req.body.password) {
-				throw new Error("Password do not match");
-			}
-			return true;
-		}),
 	body("email")
 		.notEmpty()
 		.withMessage("Email is required")

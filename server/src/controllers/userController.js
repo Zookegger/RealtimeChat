@@ -48,7 +48,7 @@ export const register = async (req, res, next) => {
 
 		const existing_user = await User.findOne({
 			$or: [
-				{ userName: register_user.userName },
+				{ userName: register_user.username },
 				{ email: register_user.email },
 			],
 		});
@@ -58,7 +58,7 @@ export const register = async (req, res, next) => {
 		}
 
 		const new_user = await User.create({
-			userName: register_user.userName,
+			userName: register_user.username,
 			birthday: register_user.birthday,
 			email: register_user.email,
 			fullname: register_user.fullname,

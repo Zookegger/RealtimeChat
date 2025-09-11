@@ -5,9 +5,7 @@ import logger from './utils/logger.js';
 import dotenv from 'dotenv';
 import { createWebsocketServer } from './sockets/socket.js';
 
-dotenv.config();
-
-logger.debug(`JWT_SECRET: ${process.env.JWT_SECRET}`);
+dotenv.config({ debug: true });
 
 const PORT = process.env.SERVER_PORT || 5000;
 
@@ -89,4 +87,4 @@ const initializeServer = async () => {
 /**
  * Start the application
  */
-initializeServer();
+await initializeServer();

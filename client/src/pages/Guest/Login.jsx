@@ -60,14 +60,14 @@ export const Login = () => {
 				}),
 			});
 
-			const data = await response.json();
+			const result = await response.json();
 			if (response.ok) {
-				console.log(`Login successful:`, data);
+				console.log(`Login successful:`, result);
 			} else {
-				console.error(`Login failed:`, data);
+				console.error(`Login failed:`, result);
 				setFormError(
-					data.errors?.[0]?.msg ||
-						data.error.message ||
+					result.errors?.[0]?.msg ||
+						result.error.message ||
 						"Login failed"
 				);
 			}

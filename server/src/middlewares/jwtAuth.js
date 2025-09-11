@@ -1,4 +1,7 @@
 import jwt from "jsonwebtoken";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 // Configuration
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -7,7 +10,7 @@ const JWT_ISSUER = process.env.JWT_ISSUER ?? 'realtime-chat';
 const JWT_AUDIENCE = process.env.JWT_AUDIENCE ?? 'chat-users';
 // const REFRESH_TOKEN_EXPIRES_IN = process.env.REFRESH_TOKEN_EXPIRES_IN;
 
-if (JWT_SECRET) throw new Error("Missing JWT_SECRET environment variable");
+if (JWT_SECRET === null) throw new Error("Missing JWT_SECRET environment variable");
 
 /**
  * Generates a JWT token for user authentication

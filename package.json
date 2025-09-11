@@ -5,9 +5,9 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"start": "concurrently \"npm run server\" \"npm run client\"",
-		"server": "cd server && npm start",
-		"client": "cd client && npm start",
-		"dev": "concurrently \"cd server/src/ && nodemon index.js \" \"npm run client\"",
+		"server": "cd server && node src/index.js",
+		"client": "cd client && npm run start",
+		"dev": "concurrently \"cd server && nodemon src/index.js \" \"npm run client\"",
 		"install-all": "npm install && cd server && npm install && cd ../client && npm install"
 	},
 	"repository": {

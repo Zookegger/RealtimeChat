@@ -79,6 +79,44 @@ export const Register = () => {
 		return isValid;
 	};
 
+	const submitRegistration = async () => {
+		const isValid = validateForm();
+
+		if (isValid) {
+			try {
+				const API_BASE_URL = process.env.REACT_APP_API_URL;
+				const REGISTER_ENDPOINT = "/users/register";
+
+				const response = await fetch(`${API_BASE_URL}${REGISTER_ENDPOINT}`, {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({
+						username: username,
+						password: password,
+						email: email,
+						fullname: fullname,
+						gender: gender,
+						birthday: birthday,
+					})
+				});
+
+				const result = await response.json();
+				if (response.ok) {
+					console.log('Registration successful:', result);
+				} else {
+					console.error('Registration failed:', result);
+					setErrors(
+						result.errors?.[0]?.msg ||
+						result.error.message ||
+						"Login failed"
+					);
+				}
+			} catch (error) {
+				console.error(`Network error: ${error.message}`);
+			}
+		}
+	};
+
 	return (
 		<Container maxWidth={"md"} sx={{ my: 5 }}>
 			<Paper elevation={5} sx={{ p: 4 }}>
@@ -98,7 +136,7 @@ export const Register = () => {
 						setIsLoading(true);
 
 						setTimeout(() => {
-							validateForm();
+							submitRegistration();
 							setIsLoading(false);
 						}, 3000);
 					}}
@@ -129,7 +167,7 @@ export const Register = () => {
 									/>
 								</FormControl>
 							</Grid>
-							<Grid item size={{ xs: 6, md: 6 }} >
+							<Grid item size={{ xs: 6, md: 6 }}>
 								<FormControl variant="standard" fullWidth>
 									<InputLabel
 										id="birthday-label"
@@ -290,6 +328,7 @@ export const Register = () => {
 							variant="contained"
 							color="inherit"
 							sx={{ fontWeight: "bold" }}
+							type="submit"
 						>
 							Register
 						</Button>
@@ -299,8 +338,15 @@ export const Register = () => {
 				<Divider sx={{ my: 4 }} />
 
 				<Box>
-					<Paper elevation={2} sx={{ p: 6, backgroundColor: "ButtonShadow" }}>
-						<Typography variant="h5" fontWeight={"bold"} gutterBottom>
+					<Paper
+						elevation={2}
+						sx={{ p: 6, backgroundColor: "ButtonShadow" }}
+					>
+						<Typography
+							variant="h5"
+							fontWeight={"bold"}
+							gutterBottom
+						>
 							Already have an account?
 						</Typography>
 						<Button
