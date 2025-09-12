@@ -86,29 +86,33 @@ export const Register = () => {
 			try {
 				const API_BASE_URL = process.env.REACT_APP_API_URL;
 				const REGISTER_ENDPOINT = "/users/register";
+				const user_data = {
+					username: username,
+					password: password,
+					email: email,
+					fullname: fullname,
+					gender: gender,
+					birthday: birthday,
+				};
 
-				const response = await fetch(`${API_BASE_URL}${REGISTER_ENDPOINT}`, {
-					method: "POST",
-					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify({
-						username: username,
-						password: password,
-						email: email,
-						fullname: fullname,
-						gender: gender,
-						birthday: birthday,
-					})
-				});
+				const response = await fetch(
+					`${API_BASE_URL}${REGISTER_ENDPOINT}`,
+					{
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify(user_data),
+					}
+				);
 
 				const result = await response.json();
 				if (response.ok) {
-					console.log('Registration successful:', result);
+					console.log("Registration successful:", result);
 				} else {
-					console.error('Registration failed:', result);
+					console.error("Registration failed:", result);
 					setErrors(
 						result.errors?.[0]?.msg ||
-						result.error.message ||
-						"Login failed"
+							result.error.message ||
+							"Login failed"
 					);
 				}
 			} catch (error) {
@@ -144,7 +148,7 @@ export const Register = () => {
 					<Box my={3}>
 						{/* Personal information */}
 						<Grid container spacing={4} mb={3} direction={"row"}>
-							<Grid item size={{ xs: 12, md: 6 }}>
+							<Grid size={{ xs: 12, md: 6 }}>
 								<FormControl variant="standard" fullWidth>
 									<InputLabel
 										id="fullname-label"
@@ -167,7 +171,7 @@ export const Register = () => {
 									/>
 								</FormControl>
 							</Grid>
-							<Grid item size={{ xs: 6, md: 6 }}>
+							<Grid size={{ xs: 6, md: 6 }}>
 								<FormControl variant="standard" fullWidth>
 									<InputLabel
 										id="birthday-label"
@@ -191,7 +195,7 @@ export const Register = () => {
 									/>
 								</FormControl>
 							</Grid>
-							<Grid item size={{ xs: 6, md: 6 }}>
+							<Grid size={{ xs: 6, md: 6 }}>
 								<FormControl variant="standard" fullWidth>
 									<InputLabel
 										id="gender-label"
@@ -227,7 +231,7 @@ export const Register = () => {
 
 						{/* Account information */}
 						<Grid container spacing={4} mb={3}>
-							<Grid item size={{ xs: 12, md: 6 }}>
+							<Grid size={{ xs: 12, md: 6 }}>
 								<FormControl variant="standard" fullWidth>
 									<InputLabel
 										id="username-label"
@@ -250,7 +254,7 @@ export const Register = () => {
 									/>
 								</FormControl>
 							</Grid>
-							<Grid item size={{ xs: 12, md: 6 }}>
+							<Grid size={{ xs: 12, md: 6 }}>
 								<FormControl variant="standard" fullWidth>
 									<InputLabel
 										id="email-label"
@@ -273,7 +277,7 @@ export const Register = () => {
 									/>
 								</FormControl>
 							</Grid>
-							<Grid item size={{ xs: 12, md: 6 }}>
+							<Grid size={{ xs: 12, md: 6 }}>
 								<FormControl variant="standard" fullWidth>
 									<InputLabel
 										id="password-label"
@@ -297,7 +301,7 @@ export const Register = () => {
 									/>
 								</FormControl>
 							</Grid>
-							<Grid item size={{ xs: 12, md: 6 }}>
+							<Grid size={{ xs: 12, md: 6 }}>
 								<FormControl variant="standard" fullWidth>
 									<InputLabel
 										id="confirm-password-label"

@@ -1,7 +1,8 @@
 import { Router } from "express";
-import { login, register } from "../../controllers/userController.js";
+import { authenticate, login, register } from "../../controllers/userController.js";
 import { body } from "express-validator";
 import { handleValidationErrors } from "../../middlewares/requestValidation.js";
+import { authenticateJwt } from "../../middlewares/jwtAuth.js";
 
 const loginValidation = [
 	body("login").notEmpty().withMessage("Username or email is required"),
@@ -52,6 +53,8 @@ router.get("/", (req, res) => {
 router.post("/login", loginValidation, handleValidationErrors, login);
 
 router.post("/register", registerValidation, handleValidationErrors, register);
+
+router.get("/me", authenticateJwt, authenticate);
 
 router.get("/health", (req, res) => {
 	res.json("It's working!");

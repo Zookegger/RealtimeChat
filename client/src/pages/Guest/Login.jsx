@@ -16,9 +16,13 @@ import {
 	Typography,
 } from "@mui/material";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 export const Login = () => {
+	const navigate = useNavigate();
+	const { login } = useAuth();
+
 	const [remember_me, setRememberMe] = useState(false);
 	const [is_loading, setIsLoading] = useState(false);
 	const [usernameOrEmail, setUsernameOrEmail] = useState("");
@@ -30,12 +34,12 @@ export const Login = () => {
 		let isValid = true;
 		const newErrors = { username: "", password: "" };
 
-		if (!usernameOrEmail) {
+		if (!usernameOrEmail.trim()) {
 			isValid = false;
 			newErrors.username = "Username or email is invalid";
 		}
 
-		if (!password) {
+		if (!password.trim()) {
 			isValid = false;
 			newErrors.password = "Password is invalid";
 		}
@@ -44,35 +48,47 @@ export const Login = () => {
 		return isValid;
 	};
 
-	const loginProcess = async () => {
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		setFormError(null);
+
+		setErrors({ username: "", password: "" });
+
+		if (!validateForm()) {
+			return;
+		}
+
+		setIsLoading(true);
+
 		try {
-			const API_BASE_URL = process.env.REACT_APP_API_URL;
-			const LOGIN_ENDPOINT = "/users/login";
-
-			const response = await fetch(`${API_BASE_URL}${LOGIN_ENDPOINT}`, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					login: usernameOrEmail,
-					password: password,
-				}),
-			});
-
-			const result = await response.json();
-			if (response.ok) {
-				console.log(`Login successful:`, result);
-			} else {
-				console.error(`Login failed:`, result);
-				setFormError(
-					result.errors?.[0]?.msg ||
-						result.error.message ||
-						"Login failed"
-				);
+			const credentials = {
+				login: usernameOrEmail.trim(),
+				password: password.trim(),
 			}
+			
+			const result = await login(credentials);
+			
+			console.log("Login successful:", result);
+
+			// Do something after logging in
+			navigate("/")
+
 		} catch (error) {
 			console.error(`Network error: ${error.message}`);
+			if (error.errors && Array.isArray(error.errors)) {
+				// Validation errors from server
+				setFormError(error.errors[0]?.msg || "Login failed");
+			} else if (error.error?.message) {
+				// General error message
+				setFormError(error.error.message);
+			} else if (error.message) {
+				// Network or other errors
+				setFormError(error.message);
+			} else {
+				setFormError("An unexpected error occurred. Please try again.");
+			}
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -88,18 +104,7 @@ export const Login = () => {
 				>
 					Login
 				</Typography>
-				<Box
-					component="form"
-					onSubmit={(e) => {
-						e.preventDefault();
-						setFormError(null);
-
-						setIsLoading(true);
-						validateForm();
-						loginProcess();
-						setIsLoading(false);
-					}}
-				>
+				<Box component="form" onSubmit={handleSubmit}>
 					{form_error !== null && (
 						<Alert severity="error" sx={{ mb: 2 }}>
 							{form_error ??
@@ -152,7 +157,7 @@ export const Login = () => {
 						<FormControlLabel
 							control={
 								<Checkbox
-									value={remember_me}
+									checked={remember_me}
 									onChange={(e) => {
 										setRememberMe(e.target.checked);
 									}}

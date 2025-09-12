@@ -57,7 +57,7 @@ export const GuestFooter = () => {
 					}}
 				>
 					{/* Navigation */}
-					<Grid item size={{ xs: 12, md: 4 }}>
+					<Grid size={{ xs: 12, md: 4 }}>
 						<Box
 							sx={{
 								justifyContent: "left",
@@ -135,7 +135,7 @@ export const GuestFooter = () => {
 					</Grid>
 
 					{/* About */}
-					<Grid item size={{ xs: 12, md: 4 }}>
+					<Grid size={{ xs: 12, md: 4 }}>
 						<Typography variant="h6" gutterBottom>
 							&copy; 2025 RealtimeChat
 						</Typography>
@@ -147,7 +147,7 @@ export const GuestFooter = () => {
 					</Grid>
 
 					{/* Contact */}
-					<Grid item size={{ xs: 12, md: 4 }}>
+					<Grid size={{ xs: 12, md: 4 }}>
 						<Box
 							sx={{
 								justifyContent: "right",
@@ -227,7 +227,7 @@ export const GuestFooter = () => {
 					}}
 				>
 					{/* About */}
-					<Grid item size={{ xs: 12, md: 4 }}>
+					<Grid size={{ xs: 12, md: 4 }}>
 						<Typography variant="h6" gutterBottom>
 							&copy; 2025 RealtimeChat
 						</Typography>
@@ -239,7 +239,7 @@ export const GuestFooter = () => {
 					</Grid>
 
 					{/* Navigation */}
-					<Grid item size={{ xs: 6, md: 4 }}>
+					<Grid size={{ xs: 6, md: 4 }}>
 						<Box
 							sx={{
 								justifyContent: "left",
@@ -317,7 +317,7 @@ export const GuestFooter = () => {
 					</Grid>
 
 					{/* Contact */}
-					<Grid item size={{ xs: 6, md: 4 }}>
+					<Grid size={{ xs: 6, md: 4 }}>
 						<Box
 							sx={{
 								justifyContent: "right",

@@ -302,7 +302,7 @@ export const PrivacyPolicy = () => {
 				</Box>
 
 				<Grid container spacing={3}>
-					<Grid item size={{ sm: 6, md: "grow" }}>
+					<Grid size={{ sm: 6, md: "grow" }}>
 						<Card variant="outlined" sx={{ height: "100%" }}>
 							<CardContent>
 								<Typography
@@ -321,7 +321,7 @@ export const PrivacyPolicy = () => {
 						</Card>
 					</Grid>
 
-					<Grid item size={{ sm: 6, md: "grow" }}>
+					<Grid size={{ sm: 6, md: "grow" }}>
 						<Card variant="outlined" sx={{ height: "100%" }}>
 							<CardContent>
 								<Typography
@@ -340,7 +340,7 @@ export const PrivacyPolicy = () => {
 						</Card>
 					</Grid>
 
-					<Grid item size={{ sm: 6, md: "grow" }}>
+					<Grid size={{ sm: 6, md: "grow" }}>
 						<Card variant="outlined" sx={{ height: "100%" }}>
 							<CardContent>
 								<Typography
@@ -359,7 +359,7 @@ export const PrivacyPolicy = () => {
 						</Card>
 					</Grid>
 
-					<Grid item size={{ sm: 6, md: "grow" }}>
+					<Grid size={{ sm: 6, md: "grow" }}>
 						<Card variant="outlined" sx={{ height: "100%" }}>
 							<CardContent>
 								<Typography

@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import { setJwtCookie } from "../middlewares/jwtAuth.js";
-import { createAuthResponse } from "../utils/authHelpers.js";
+import { checkAuthStatus, createAuthResponse } from "../utils/authHelpers.js";
+import logger from "../utils/logger.js";
 
 class UserAuthError extends Error {
 	constructor(message, error_status) {
@@ -19,10 +20,7 @@ export const login = async (req, res, next) => {
 		const { login, password } = req.body;
 
 		const user = await User.findOne({
-			$or: [
-				{ userName: login }, 
-				{ email: login }
-			],
+			$or: [{ userName: login }, { email: login }],
 		}).select("+password");
 
 		if (!user)
@@ -69,5 +67,13 @@ export const register = async (req, res, next) => {
 		createAuthResponse(res, new_user, "Registration successfully");
 	} catch (err) {
 		next(err);
+	}
+};
+
+export const authenticate = async (req, res, next) => {
+	try {
+		checkAuthStatus(res, req.user);
+	} catch (error) {
+		next(error);
 	}
 };

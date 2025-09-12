@@ -25,7 +25,7 @@ const scrollToSection = (elementId) => {
 
 const KeyFeatureGridItem = ({ title, description }) => {
 	return (
-		<Grid item xs={12} md={4}>
+		<Grid xs={12} md={4}>
 			<Card
 				sx={{
 					height: "100%",
